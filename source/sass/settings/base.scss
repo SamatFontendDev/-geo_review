@@ -1,0 +1,75 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  @include base-font(400);
+  font-size: $base-size;
+  line-height: $base-line;
+  color: $base-color;
+  background-color: $base-bg;
+  -webkit-font-smoothing: antialiased;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  li {
+    list-style: none;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: normal;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+input,
+textarea {
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  position: relative;
+  min-height: 100%;
+}
+
+.container{
+  width: 95%;
+  max-width: $container;
+  margin: 0 auto;
+}

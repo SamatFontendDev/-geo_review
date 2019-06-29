@@ -1,0 +1,6 @@
+<button class="{{className}}" {{#if type}}type="{{type}}" {{/if}}>
+    {{#if icon}}
+    {{> Icon name=icon className=className}}
+    {{/if}}
+    <span class="{{className}}__text">{{value}}</span>
+</button>

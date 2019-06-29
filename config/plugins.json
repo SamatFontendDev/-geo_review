@@ -1,0 +1,48 @@
+[
+  {
+    "type": "css",
+    "name": "normalize.css",
+    "url": "./node_modules/normalize.css/normalize.css",
+    "activated": true
+  },
+  {
+    "type": "css",
+    "name": "bootstrap-grid",
+    "url": "./node_modules/bootstrap/dist/css/bootstrap-grid.min.css",
+    "activated": false
+  },
+  {
+    "type": "js",
+    "name": "jquery",
+    "url": "./node_modules/jquery/dist/jquery.min.js",
+    "activated": false
+  },
+  {
+    "type": "plugin",
+    "name": "owl.carousel",
+    "js": "./node_modules/owl.carousel/dist/owl.carousel.min.js",
+    "css": [
+      "./node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
+      "./node_modules/owl.carousel/dist/assets/owl.theme.default.min.css"
+    ],
+    "activated": false
+  },
+  {
+    "type": "API",
+    "name": "SDK Vkontakte",
+    "url": "https://vk.com/js/api/xd_connection.js?2",
+    "activated": false
+  },
+  {
+    "type": "API",
+    "name": "Google map API",
+    "url": "https://maps.googleapis.com/maps/api/js?key=AIzaSyAD-N55uT4bDIwV7xqmwUvUvmUgohgWcBE",
+    "activated": false
+  },
+  {
+    "type": "API",
+    "name": "Yandex map API",
+    "url": "https://api-maps.yandex.ru/2.1/?apikey=124fe3c9-1b1f-4134-86b1-c7861afe76f5&lang=ru_RU",
+    "activated": true
+  }
+]

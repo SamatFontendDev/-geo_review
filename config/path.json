@@ -1,0 +1,16 @@
+{
+  "tasks": {
+    "handlebars": "./config/tasks/handlebars.js",
+    "scss": "./config/tasks/scss.js",
+    "scripts": "./config/tasks/scripts.js",
+    "del": "./config/tasks/clean.js",
+    "watch": "./config/tasks/watch.js",
+    "server": "./config/tasks/server.js",
+    "images": "./config/tasks/image.js",
+    "copy:fonts": "./config/tasks/fonts.copy.js",
+    "vendor:css": "./config/tasks/vendor.css.js",
+    "vendor:js": "./config/tasks/vendor.js.js",
+    "sprite:svg": "./config/tasks/svg.sprite.js",
+    "inject": "./config/tasks/inject.js"
+  }
+}

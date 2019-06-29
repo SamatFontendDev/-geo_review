@@ -1,0 +1,25 @@
+{
+    "title": "Hello! I`m gulp :)",
+    "description": "Front-start-template",
+    "keywords": "frontend, javascript, html",
+    "author": "Alexander Nesvit",
+    "desc": "Get started ?",
+    "structures": {
+        "menu": [
+            {
+                "url": "#",
+                "name": "home"
+            },
+            {
+                "url": "#",
+                "name": "about",
+                "icon": "vk"
+            },
+            {
+                "url": "#",
+                "name": "contacts",
+                "icon": "twitter"
+            }
+        ]
+    }
+}
