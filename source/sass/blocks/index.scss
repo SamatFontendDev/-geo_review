@@ -2,3 +2,105 @@
     height: 100vh;
     width: 100%;
 }
+.popup{
+    display: none;
+    position: fixed;
+    z-index: 15;
+    top: 10%;
+    width: 380px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffff;
+    left: 50%;
+    margin-left: -190px;
+    font-size: 14px;
+}
+.popup__title{
+    color: #fff;
+}
+.popup__form{
+    display: flex;
+    flex-direction: column;
+}
+.popup__content{
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: 15px;
+    padding-top: 18px;
+}
+.popup__header{
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background: #ff8663;
+    position: relative;
+}
+.popup__close{
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    cursor: pointer;
+}
+.close-svg{
+    width: 10px;
+    height: 10px;
+    fill: #fff;
+}
+.reviews__list{
+    padding-bottom: 18px;
+}
+.popup__form-title{
+    font-size: 16px;
+    color: #ff8663;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+.popup__input,#textarea{
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 10px;
+    border: 1px solid #c4c4c4;
+    margin-bottom: 10px;
+}
+#textarea{
+    height: 100px;
+}
+.row{
+    display: flex;
+    justify-content: flex-end;
+}
+.add-btn{
+    padding: 9px 18px;
+    border-radius: 8px;
+    background: #ff8663;
+    color: #fff;
+}
+.review__name{
+    color: #4f4f4f;
+    b{
+        margin-right: 3px;
+    }
+    span{
+        color: #7b7b7b;
+        margin-right: 3px;
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+}
+.review__text{
+    color: #4f4f4f;
+    font-weight: 600;
+}
+.reviews__item{
+    margin-bottom: 10px;
+}
+.reviews__list{
+    height: 100px;
+    overflow-y: scroll;
+}
+
+    
