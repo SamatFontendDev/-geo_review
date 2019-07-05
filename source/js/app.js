@@ -7,7 +7,20 @@ var reviewText = document.querySelector('#textarea');
 var btn = document.querySelector('.add-btn');
 var close = document.querySelector('.popup__close');
 var reviews = document.querySelector('.reviews__list');
-var reviewsStatus = document.querySelector('.not-reviews')
+var reviewsStatus = document.querySelector('.not-reviews');
+function formatDate (date) {
+
+    var dd = date.getDate();
+    if (dd < 10) dd = '0' + dd;
+  
+    var mm = date.getMonth() + 1;
+    if (mm < 10) mm = '0' + mm;
+  
+    var yy = date.getFullYear() % 100;
+    if (yy < 10) yy = '0' + yy;
+  
+    return dd + '.' + mm + '.' + yy;
+}
 
 function init(){ 
     var myMap = new ymaps.Map("map", {
@@ -15,10 +28,33 @@ function init(){
         zoom: 12,
         controls: []
     });
+    var arrMarks = [];
+    var customItemContentLayout = ymaps.templateLayoutFactory.createClass(
+        '<div class=ballon_header>{{ properties.balloonContentHeader|raw }}</div>' +
+        '<div class=ballon_body>{{ properties.balloonContentBody|raw }}</div>' +
+        '<div class=ballon_footer>{{ properties.balloonContentFooter|raw }}</div>'+
+        '<span class="ballon-date">{{ properties.balloonContentDate|raw }}</span>'
+    );
+
+    var clusterer = new ymaps.Clusterer({
+        clusterDisableClickZoom: true,
+        clusterOpenBalloonOnClick: true,
+        clusterBalloonContentLayout: 'cluster#balloonCarousel',
+        clusterBalloonItemContentLayout: customItemContentLayout,
+        clusterBalloonPanelMaxMapArea: 0,
+        clusterBalloonContentLayoutWidth: 200,
+        clusterBalloonContentLayoutHeight: 130,
+        clusterBalloonPagerSize: 5
+    });
+
+    
+
+    myMap.geoObjects.add(clusterer);
     
     myMap.events.add('click', function (e) {
-       popup.style.display = 'block';
+        popup.style.display = 'block';
         var coords = e.get('coords');
+        reviews.innerHTML = '';
 
         var myGeocoder = ymaps.geocode(coords);
 
@@ -26,54 +62,67 @@ function init(){
             var address = res.geoObjects.get(0).getAddressLine();
 
             title.textContent = address;
-
-            localStorage[address] = JSON.stringify(coords);
             
-            var myGeoObject = new ymaps.GeoObject({
-                geometry: {
-                    type: "Point", 
-                    coordinates: coords 
-                }
-            });
+            btn.addEventListener('click', function() {
+                var nameValue = nameInput.value;
+                var placeValue = placeInput.value;
+                var textValue = reviewText.value;
+                var d = new Date();
+                var date = formatDate(d);
 
-            myMap.geoObjects.add(myGeoObject); 
+                reviewsStatus.style.display = 'none';
+                
+                reviews.innerHTML += ` <li class="reviews__item">
+                                            <div class="review__name"><b>${nameValue}</b><span>${placeValue}</span><span>${date}</span></div>
+                                            <div class="review__text">${textValue}</div>
+                                        </li>`;
+                
+                var markObj = {
+                    coords,
+                    address,
+                    review: {
+                        nameValue,
+                        placeValue,
+                        textValue
+                    }
+                }
+                arrMarks.push(markObj);
+                console.log(arrMarks);
+                nameInput.value = '';
+                placeInput.value = '';
+                reviewText.value = '';
+
+              
+
+               var placemark = new ymaps.Placemark(coords, {
+                    balloonContentHeader: placeValue,
+                    balloonContentBody: address,
+                    balloonContentFooter: textValue,
+                    balloonContentDate: date
+                });
+                placemark.events.add('click', function (e) {
+                    var markCoords = e.get('coords');
+                    
+                    for (var i = 0; i < arrMarks.length; i++) {
+                        if (arrMarks[i].coords === markCoords) {
+                            title.textContent = arrMarks[i].address;
+                            reviews.innerHTML +=    `<li class="reviews__item">
+                                                        <div class="review__name"><b>${arrMarks[i].nameValue}</b><span>${arrMarks[i].placeValue}</span><span>${arrMarks[i].date}</span></div>
+                                                        <div class="review__text">${arrMarks[i].textValue}</div>
+                                                    </li>`;
+                        }
+                    }
+
+                    e.preventDefault();
+                   
+                    popup.style.display = 'block';
+                });    
+                clusterer.add(placemark);
+            });
+             
         });
     });
-    
-    // function rennderPoints() {
-        
-    //     for (var key in localStorage) {
-    //         var coords = JSON.parse(localStorage[key]);
-    
-    //         var myGeoObject = new ymaps.GeoObject({
-    //             geometry: {
-    //                 type: "Point", 
-    //                 coordinates: coords 
-    //             }
-    //         });
-    
-    //         myMap.geoObjects.add(myGeoObject); 
-    //     }
-    // };
-    
-    // rennderPoints();
 }
-
 close.addEventListener('click', function close() {
     popup.style.display = 'none';
-});
-
-btn.addEventListener('click', function() {
-    var nameValue = nameInput.value;
-    var placeValue = placeInput.value;
-    var textValue = reviewText.value;
-    var date = new Date();
-    reviewsStatus.style.display = 'none';
-    reviews.innerHTML += ` <li class="reviews__item">
-                                <div class="review__name"><b>${nameValue}</b><span>${placeValue}</span><span>${date}</span></div>
-                                <div class="review__text">${textValue}</div>
-                            </li>`;
-    nameInput.value = '';
-    placeInput.value = '';
-    reviewText.value = '';
 });
