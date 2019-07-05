@@ -22,13 +22,23 @@ function formatDate (date) {
     return dd + '.' + mm + '.' + yy;
 }
 
+function renderReview (name, place, date, text, address, titleReview) {
+    titleReview.textContent = address;
+    reviews.innerHTML +=    `<li class="reviews__item">
+                                <div class="review__name"><b>${name}</b><span>${place}</span><span>${date}</span></div>
+                                <div class="review__text">${text}</div>
+                            </li>`;
+}
+
 function init(){ 
     var myMap = new ymaps.Map("map", {
         center: [55.78874, 49.12214],
         zoom: 12,
         controls: []
     });
+
     var arrMarks = [];
+
     var customItemContentLayout = ymaps.templateLayoutFactory.createClass(
         '<div class=ballon_header>{{ properties.balloonContentHeader|raw }}</div>' +
         '<div class=ballon_body>{{ properties.balloonContentBody|raw }}</div>' +
@@ -53,7 +63,9 @@ function init(){
     
     myMap.events.add('click', function (e) {
         popup.style.display = 'block';
+
         var coords = e.get('coords');
+        
         reviews.innerHTML = '';
 
         var myGeocoder = ymaps.geocode(coords);
@@ -72,7 +84,7 @@ function init(){
 
                 reviewsStatus.style.display = 'none';
                 
-                reviews.innerHTML += ` <li class="reviews__item">
+                reviews.innerHTML +=    `<li class="reviews__item">
                                             <div class="review__name"><b>${nameValue}</b><span>${placeValue}</span><span>${date}</span></div>
                                             <div class="review__text">${textValue}</div>
                                         </li>`;
@@ -86,30 +98,31 @@ function init(){
                         textValue
                     }
                 }
+
                 arrMarks.push(markObj);
                 console.log(arrMarks);
                 nameInput.value = '';
                 placeInput.value = '';
                 reviewText.value = '';
 
-              
-
-               var placemark = new ymaps.Placemark(coords, {
+                var placemark = new ymaps.Placemark(coords, {
                     balloonContentHeader: placeValue,
                     balloonContentBody: address,
                     balloonContentFooter: textValue,
                     balloonContentDate: date
                 });
+
                 placemark.events.add('click', function (e) {
                     var markCoords = e.get('coords');
                     
                     for (var i = 0; i < arrMarks.length; i++) {
                         if (arrMarks[i].coords === markCoords) {
-                            title.textContent = arrMarks[i].address;
-                            reviews.innerHTML +=    `<li class="reviews__item">
-                                                        <div class="review__name"><b>${arrMarks[i].nameValue}</b><span>${arrMarks[i].placeValue}</span><span>${arrMarks[i].date}</span></div>
-                                                        <div class="review__text">${arrMarks[i].textValue}</div>
-                                                    </li>`;
+                            renderReview (arrMarks[i].nameValue,
+                                        arrMarks[i].placeValue,
+                                        arrMarks[i].date,
+                                        arrMarks[i].textValue,
+                                        arrMarks[i].address, 
+                                        title);
                         }
                     }
 
@@ -117,6 +130,7 @@ function init(){
                    
                     popup.style.display = 'block';
                 });    
+
                 clusterer.add(placemark);
             });
              
