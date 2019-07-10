@@ -75,7 +75,7 @@ function init(){
 
             title.textContent = address;
             
-            btn.addEventListener('click', function() {
+            btn.onclick = function() {
                 var nameValue = nameInput.value;
                 var placeValue = placeInput.value;
                 var textValue = reviewText.value;
@@ -132,7 +132,7 @@ function init(){
                 });    
 
                 clusterer.add(placemark);
-            });
+            };
              
         });
     });
